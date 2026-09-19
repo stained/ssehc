@@ -7,3 +7,6 @@ __pycache__/
 .env.*
 .secrets/
 *.key
+
+# downloaded piece artwork, pending a licensing decision
+_pieces/
