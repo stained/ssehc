@@ -48,7 +48,10 @@
   .cell.w{background:var(--white-sq)}
   .cell.b{background:var(--black-sq)}
   /* 1 cell = 12.5cqw, so this glyph is 80% of a cell at any board size */
-  .piece{font-size:34px;font-size:10cqw;line-height:1;pointer-events:none}
+  /* font-variant-emoji is belt-and-braces alongside the VS15 in GLYPH: it asks
+     for text presentation explicitly. Ignored where unsupported. */
+  .piece{font-size:34px;font-size:10cqw;line-height:1;pointer-events:none;
+         font-variant-emoji:text}
 
   /* traditional piece colours — the chess illusion */
   .trad .piece.pw{color:#fbf8f0;text-shadow:0 0 1px #12151c,0 0 3px #12151c,0 1px 1px #12151c}
@@ -169,7 +172,18 @@
 // ---------------------------------------------------------------- constants
 const WHITE = 0, BLACK = 1;
 const PAWN=1, KNIGHT=2, BISHOP=3, ROOK=4, QUEEN=5, KING=6;
-const GLYPH  = {1:"\u265F",2:"\u265E",3:"\u265D",4:"\u265C",5:"\u265B",6:"\u265A"};
+// U+265A..U+265F are the SOLID chess glyphs.  Every piece is drawn from the solid
+// set and coloured in CSS, rather than mixing the solid and outline sets, so all
+// six share one silhouette.
+//
+// U+FE0E (VS15, "text presentation") is appended to all of them.  It is a no-op
+// for the eleven glyphs that are text by default, and essential for U+265F BLACK
+// CHESS PAWN -- the only chess symbol in Unicode with default EMOJI presentation.
+// Without it a phone draws the pawn from the system emoji font, which ignores
+// `color` and looks nothing like the rest of the set.
+const VS15 = "\uFE0E";
+const GLYPH  = {1:"\u265F"+VS15, 2:"\u265E"+VS15, 3:"\u265D"+VS15,
+                4:"\u265C"+VS15, 5:"\u265B"+VS15, 6:"\u265A"+VS15};
 const LETTER = {1:"P",2:"N",3:"B",4:"R",5:"Q",6:"K"};
 const SIDE   = ["White","Black"];
 const DIRS  = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
