@@ -57,3 +57,7 @@ python3 inversion.py   # an earlier waypoint: movement templates + king capture
 The JavaScript engine in `index.html` matches `paint.py` exactly — 96 opening
 moves a side, verified against 300 randomised games with invariants asserted
 every ply.
+
+## Licence
+
+MIT — see [LICENSE](LICENSE).
